@@ -6,32 +6,9 @@ namespace ShoppingCart.Product
 {
     public class Iphone: Product
     {
-        private readonly string _title;
-        private double _price;
-        private ShoppingCart.Category.Category _category;
+        public Iphone(double price, ShoppingCart.Category.Category category, string title = "Iphone"):base(title, price, category)
+        {
+        }
         
-        public Iphone(double price, ShoppingCart.Category.Category category, string title = "Iphone")
-        {
-            _title = title;
-            _price = price;
-            _category = category;
-        }
-
-        public override string Title
-        {
-            get { return _title; }
-        }
-
-        public override double Price
-        {
-            get { return _price; }
-            set { _price = value; }
-        }
-
-        public override ShoppingCart.Category.Category Category
-        {
-            get { return _category; }
-            set { _category = value; }
-        }
     }
 }

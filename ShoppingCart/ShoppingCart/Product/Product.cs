@@ -6,8 +6,62 @@ namespace ShoppingCart.Product
 {
     public abstract class Product
     {
-        public abstract string Title { get; }
-        public abstract double Price { get; set; }
-        public abstract ShoppingCart.Category.Category Category { get; set; }
+        private string _title;
+        private double _price;
+        private ShoppingCart.Category.Category _category;
+
+        public Product(string title, double price, ShoppingCart.Category.Category category)
+        {
+            _title = title;
+            _price = price;
+            _category = category;
+        }
+
+        public string Title
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_title))
+                {
+                    throw new ArgumentNullException();
+                }
+
+                return _title;
+            }
+
+            set
+            {
+                if (string.IsNullOrWhiteSpace(_title))
+                {
+                    throw new ArgumentNullException();
+                }
+
+                _title = value;
+            }
+        }
+
+        public double Price
+        {
+            get
+            {
+                if (_price <= 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                return _price;
+            }
+            set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                _price = value;
+            }
+        }
+
+        public ShoppingCart.Category.Category Category { get { return _category; } set { _category = value; } }
+        
     }
 }
