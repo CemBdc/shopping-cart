@@ -7,20 +7,20 @@ namespace ShoppingCart.Category
 {
     public class CategoryFactory
     {
-        public Category Get(CategoryTypes categoryTypes)
+        public Category Get(CategoryTypes categoryTypes, Category parentCategory = null)
         {
             Category category = null;
 
             switch (categoryTypes)
             {
                 case CategoryTypes.Electronic:
-                    category = new ElectronicCategory();
+                    category = new ElectronicCategory(parentCategory);
                     break;
                 case CategoryTypes.Phone:
-                    category = new PhoneCategory();
+                    category = new PhoneCategory(parentCategory);
                     break;
                 case CategoryTypes.Computer:
-                    category = new ComputerCategory();
+                    category = new ComputerCategory(parentCategory);
                     break;
             }
 

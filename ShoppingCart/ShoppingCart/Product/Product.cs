@@ -8,5 +8,6 @@ namespace ShoppingCart.Product
     {
         public abstract string Title { get; }
         public abstract double Price { get; set; }
+        public abstract ShoppingCart.Category.Category Category { get; set; }
     }
 }

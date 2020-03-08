@@ -8,13 +8,8 @@ namespace ShoppingCart.Category
     {
         private readonly string _title;
         private Category _parentCategory;
-
-        public ElectronicCategory()
-        {
-            _title = "Electronic";
-        }
-
-        public ElectronicCategory(Category parentCategory)
+        
+        public ElectronicCategory(Category parentCategory = null)
         {
             _title = "Electronic";
             _parentCategory = parentCategory;
@@ -23,6 +18,12 @@ namespace ShoppingCart.Category
         public override string Title
         {
             get { return _title; }
+        }
+
+        public override Category ParentCategory
+        {
+            get { return _parentCategory; }
+            set { _parentCategory = value; }
         }
     }
 }

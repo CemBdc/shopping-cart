@@ -8,11 +8,13 @@ namespace ShoppingCart.Product
     {
         private readonly string _title;
         private double _price;
-
-        public Macbook()
+        private ShoppingCart.Category.Category _category;
+        
+        public Macbook(double price, ShoppingCart.Category.Category category, string title = "Macbook")
         {
-            _title = "Macbook";
-            _price = 15500.0;
+            _title = title;
+            _price = price;
+            _category = category;
         }
 
         public override string Title
@@ -24,6 +26,12 @@ namespace ShoppingCart.Product
         {
             get { return _price; }
             set { _price = value; }
+        }
+
+        public override ShoppingCart.Category.Category Category
+        {
+            get { return _category; }
+            set { _category = value; }
         }
     }
 }
