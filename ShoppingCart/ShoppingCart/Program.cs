@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
 
 namespace ShoppingCart
 {
@@ -22,10 +24,22 @@ namespace ShoppingCart
         {
             IServiceCollection services = new ServiceCollection();
 
+            var config = LoadConfiguration();
+            services.AddSingleton(config);
+
             // required to run the application
             services.AddTransient<App>();
 
             return services;
+        }
+
+        public static IConfiguration LoadConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            return builder.Build();
         }
     }
 }

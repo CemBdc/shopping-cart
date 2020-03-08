@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ShoppingCart.Product;
+using ShoppingCart.Campaign;
+using ShoppingCart.Coupon;
+using Microsoft.Extensions.Configuration;
 
 namespace ShoppingCart
 {
@@ -12,15 +15,42 @@ namespace ShoppingCart
     /// </summary>
     class App
     {
+        private readonly IConfiguration _config;
+
+        public App(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public void Run()
         {
-            CategoryFactory categoryFactory = new CategoryFactory();
-            var electronicCategory = categoryFactory.Get(CategoryTypes.Electronic);
-            var computerCategory = categoryFactory.Get(CategoryTypes.Computer, electronicCategory);
-            var phoneCategory = categoryFactory.Get(CategoryTypes.Phone, electronicCategory);
+            var costPerDelivery = _config.GetValue<string>("Delivery:CostPerDelivery");
+            var costPerProduct = _config.GetValue<string>("Delivery:CostPerProduct");
+            var fixedCost = _config.GetValue<string>("Delivery:FixedCost");
+            
+            Console.WriteLine("CostPerDelivery: " + costPerDelivery);
+            Console.WriteLine("CostPerProduct: " + costPerProduct);
+            Console.WriteLine("FixedCost: " + fixedCost);
+
+            var electronicCategory = new Category.Category("Electronic");
+            var computerCategory = new Category.Category("Computer", electronicCategory);
+            var phoneCategory = new Category.Category("Phone", electronicCategory);
 
             var ipone = new Iphone(7500, phoneCategory);
             var macbook = new Macbook(18500, computerCategory);
+
+            CampaignFactory campaignFactory = new CampaignFactory();
+            var campaign1 = campaignFactory.Get(20, 3, CampaignTypes.Rate);
+            var campaign2 = campaignFactory.Get(5, 5, CampaignTypes.Amount);
+            var campaign3 = campaignFactory.Get(50, 5, CampaignTypes.Rate);
+
+            electronicCategory.AddCampaign(campaign1);
+            phoneCategory.AddCampaign(campaign2);
+            computerCategory.AddCampaign(campaign3);
+
+            CouponFactory couponFactory = new CouponFactory();
+            var coupon1 = couponFactory.Get(100, 10, CouponTypes.Rate);
+            var coupon2 = couponFactory.Get(500, 150, CouponTypes.Amount);
 
             Console.WriteLine(ipone.Title + " " + ipone.Price + " " + ipone.Category.ParentCategory.Title + " " + ipone.Category.Title);
             Console.WriteLine(macbook.Title + " " + macbook.Price + " " + macbook.Category.ParentCategory.Title + " " + macbook.Category.Title);

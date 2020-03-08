@@ -16,10 +16,18 @@ namespace ShoppingCart.Test.Product
 
         public ProductTest()
         {
-            CategoryFactory categoryFactory = new CategoryFactory();
-            electronicCategory = categoryFactory.Get(CategoryTypes.Electronic);
-            computerCategory = categoryFactory.Get(CategoryTypes.Computer, electronicCategory);
-            phoneCategory = categoryFactory.Get(CategoryTypes.Phone, electronicCategory);
+            electronicCategory = new Category.Category("Electronic");
+            computerCategory = new Category.Category("Computer", electronicCategory);
+            phoneCategory = new Category.Category("Phone", electronicCategory);
+        }
+
+        [Theory]
+        [InlineData("")]
+        public void Category_ShouldArgumentNullException_WhenTitleIsNull(string title)
+        {
+            var category = new Category.Category(title);
+            Assert.Throws<ArgumentNullException>(() => category.Title);
+
         }
 
         [Theory]
