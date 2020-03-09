@@ -34,9 +34,9 @@ namespace ShoppingCart.Cart
             _products.Add(product, quantity);
         }
 
-        public int GetNumberOfDeliveries() => _products.GroupBy(p => p.Key.Category).Count();
+        public int GetNumberOfDeliveries() => _products is null || _products.Count == 0 ? 0 : _products.GroupBy(p => p.Key.Category.Title).Count();
         
-        public int GetNumberOfProducts() => _products.Count;
+        public int GetNumberOfProducts() => _products is null ? 0 : _products.Count;
 
 
     }
