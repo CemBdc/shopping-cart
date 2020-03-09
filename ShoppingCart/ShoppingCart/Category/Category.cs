@@ -17,13 +17,13 @@ namespace ShoppingCart.Category
             ParentCategory = parentCategory;
         }
 
-        public void AddCampaign(ICampaign campaign)
-        {
-            if (_campaigns == null)
-                _campaigns = new List<ICampaign>();
+        //public void AddCampaign(ICampaign campaign)
+        //{
+        //    if (_campaigns == null)
+        //        _campaigns = new List<ICampaign>();
 
-            _campaigns.Add(campaign);
-        }
+        //    _campaigns.Add(campaign);
+        //}
 
         public List<ICampaign> GetCampaigns() => _campaigns;
 

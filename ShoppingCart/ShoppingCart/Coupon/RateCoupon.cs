@@ -7,12 +7,12 @@ namespace ShoppingCart.Coupon
     public class RateCoupon: ICoupon
     {
         private double _couponValue;
-        private int _minProductQuantity;
+        private int _minCartAmount;
 
-        public RateCoupon(double couponValue, int minProductQuantity)
+        public RateCoupon(double couponValue, int minCartAmount)
         {
             _couponValue = couponValue;
-            _minProductQuantity = minProductQuantity;
+            _minCartAmount = minCartAmount;
         }
 
         public double Discount(double amount)
@@ -25,9 +25,9 @@ namespace ShoppingCart.Coupon
             return amount * (_couponValue * 0.01);
         }
 
-        public bool IsValidCampaign(int quantity)
+        public bool IsValidCoupon(double amount)
         {
-            return quantity >= _minProductQuantity;
+            return amount >= _minCartAmount;
         }
     }
 }

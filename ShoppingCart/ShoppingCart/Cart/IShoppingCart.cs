@@ -11,5 +11,9 @@ namespace ShoppingCart.Cart
         void AddItem(Product.Product product, int quantity);
         int GetNumberOfDeliveries();
         int GetNumberOfProducts();
+        void ApplyCoupon(ICoupon coupon);
+        double GetCouponDiscount();
+        void ApplyDiscounts(ICampaign campaigns);
+        double GetCampaignDiscount();
     }
 }

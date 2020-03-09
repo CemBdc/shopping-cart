@@ -7,17 +7,17 @@ namespace ShoppingCart.Campaign
 {
     public class CampaignFactory
     {
-        public ICampaign Get(double campaignValue, int minProductQuantity, CampaignTypes campaignTypes)
+        public ICampaign Get(Category.Category category, double campaignValue, int minProductQuantity, CampaignTypes campaignTypes)
         {
             ICampaign campaign = null;
 
             switch (campaignTypes)
             {
                 case CampaignTypes.Amount:
-                    campaign = new AmountCampaign(campaignValue, minProductQuantity);
+                    campaign = new AmountCampaign(category, campaignValue, minProductQuantity);
                     break;
                 case CampaignTypes.Rate:
-                    campaign = new RateCampaign(campaignValue, minProductQuantity);
+                    campaign = new RateCampaign(category, campaignValue, minProductQuantity);
                     break;
             }
 

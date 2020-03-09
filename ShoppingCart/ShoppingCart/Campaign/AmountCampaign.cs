@@ -8,11 +8,13 @@ namespace ShoppingCart.Campaign
     {
         private double _campaignValue;
         private int _minProductQuantity;
+        private Category.Category _category;
 
-        public AmountCampaign(double campaignValue, int minProductQuantity)
+        public AmountCampaign(Category.Category category, double campaignValue, int minProductQuantity)
         {
             _campaignValue = campaignValue;
             _minProductQuantity = minProductQuantity;
+            _category = category;
         }
         
         public double Discount(double amount)
@@ -28,6 +30,11 @@ namespace ShoppingCart.Campaign
         public bool IsValidCampaign(int quantity)
         {
             return quantity >= _minProductQuantity;
+        }
+
+        public Category.Category GetCategory()
+        {
+            return _category;
         }
     }
 }

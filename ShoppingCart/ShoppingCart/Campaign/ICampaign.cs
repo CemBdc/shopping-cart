@@ -8,5 +8,6 @@ namespace ShoppingCart.Campaign
     {
         bool IsValidCampaign(int quantity);
         double Discount(double amount);
+        Category.Category GetCategory();
     }
 }

@@ -40,13 +40,9 @@ namespace ShoppingCart
             var macbook = new Macbook(18500, computerCategory);
 
             CampaignFactory campaignFactory = new CampaignFactory();
-            var campaign1 = campaignFactory.Get(20, 3, CampaignTypes.Rate);
-            var campaign2 = campaignFactory.Get(5, 5, CampaignTypes.Amount);
-            var campaign3 = campaignFactory.Get(50, 5, CampaignTypes.Rate);
-
-            electronicCategory.AddCampaign(campaign1);
-            phoneCategory.AddCampaign(campaign2);
-            computerCategory.AddCampaign(campaign3);
+            var campaign1 = campaignFactory.Get(electronicCategory, 20, 3, CampaignTypes.Rate);
+            var campaign2 = campaignFactory.Get(computerCategory, 5, 5, CampaignTypes.Amount);
+            var campaign3 = campaignFactory.Get(phoneCategory, 50, 5, CampaignTypes.Rate);
 
             CouponFactory couponFactory = new CouponFactory();
             var coupon1 = couponFactory.Get(100, 10, CouponTypes.Rate);

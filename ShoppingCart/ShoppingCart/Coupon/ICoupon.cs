@@ -6,7 +6,7 @@ namespace ShoppingCart.Coupon
 {
     public interface ICoupon
     {
-        bool IsValidCampaign(int quantity);
+        bool IsValidCoupon(double amount);
         double Discount(double amount);
     }
 }
