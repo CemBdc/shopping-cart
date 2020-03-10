@@ -62,5 +62,49 @@ namespace ShoppingCart.Test.Cart
             
 
         }
+
+        [Fact]
+        public void GetNumberOfProducts_ShouldReturnZero_WhenNoProductAdded()
+        {
+            _shoppingCart = new ShoppingCart.Cart.ShoppingCart(_deliveryCostCalculator.Object);
+
+            var numberOfProducts = _shoppingCart.GetNumberOfProducts();
+            Assert.True(numberOfProducts == 0);
+
+
+        }
+
+        [Fact]
+        public void GetTotalAmount_ShouldReturnZero_WhenNoProductAdded()
+        {
+            _shoppingCart = new ShoppingCart.Cart.ShoppingCart(_deliveryCostCalculator.Object);
+
+            var totalAmount = _shoppingCart.GetTotalAmount();
+            Assert.True(totalAmount == 0);
+
+
+        }
+
+        [Fact]
+        public void GetNumberOfDifferentProducts_ShouldReturnTwo_WhenDistinctProductCountIsTwo()
+        {
+            _shoppingCart = new ShoppingCart.Cart.ShoppingCart(_deliveryCostCalculator.Object);
+
+            ShoppingCart.Product.Iphone iphone1 = new ShoppingCart.Product.Iphone(1200, new Category.Category("c1"));
+            ShoppingCart.Product.Iphone iphone2 = new ShoppingCart.Product.Iphone(1200, new Category.Category("c123"));
+            ShoppingCart.Product.Macbook macbook1 = new ShoppingCart.Product.Macbook(1200, new Category.Category("x1"));
+            ShoppingCart.Product.Macbook macbook2 = new ShoppingCart.Product.Macbook(1200, new Category.Category("x2"));
+
+
+            _shoppingCart.AddItem(iphone1, 1);
+            _shoppingCart.AddItem(iphone2, 1);
+            _shoppingCart.AddItem(macbook1, 1);
+            _shoppingCart.AddItem(macbook2, 1);
+
+            var numberOfProducts = _shoppingCart.GetNumberOfDifferentProducts();
+            Assert.True(numberOfProducts == 2);
+
+
+        }
     }
 }
