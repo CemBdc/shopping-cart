@@ -13,7 +13,10 @@ namespace ShoppingCart.Cart
         int GetNumberOfProducts();
         void ApplyCoupon(ICoupon coupon);
         double GetCouponDiscount();
-        void ApplyDiscounts(ICampaign campaigns);
+        void ApplyDiscounts(params ICampaign[] campaigns);
         double GetCampaignDiscount();
+        double GetTotalAmountAfterDiscounts();
+        double GetDeliveryCost();
+        string Print();
     }
 }

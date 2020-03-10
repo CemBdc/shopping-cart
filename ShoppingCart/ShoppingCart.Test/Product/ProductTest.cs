@@ -35,7 +35,7 @@ namespace ShoppingCart.Test.Product
         public void ProductIphone_ShouldArgumentNullException_WhenTitleIsNull(string title)
         {
             var iphone = new Iphone(7500, phoneCategory, title);
-            Assert.Throws<ArgumentNullException>(() => iphone.Title);
+            Assert.Throws<ArgumentNullException>(() => iphone.ProductTitle);
 
         }
 
@@ -44,7 +44,7 @@ namespace ShoppingCart.Test.Product
         public void ProductMacbook_ShouldArgumentNullException_WhenTitleIsNull(string title)
         {
             var macbook = new Macbook(18500, computerCategory, title);
-            Assert.Throws<ArgumentNullException>(() => macbook.Title);
+            Assert.Throws<ArgumentNullException>(() => macbook.ProductTitle);
         }
 
         [Theory]

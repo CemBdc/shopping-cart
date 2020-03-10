@@ -17,7 +17,7 @@ namespace ShoppingCart.Product
             _category = category;
         }
 
-        public string Title
+        public string ProductTitle
         {
             get
             {

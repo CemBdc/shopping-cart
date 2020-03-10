@@ -37,9 +37,9 @@ namespace ShoppingCart.Cart
             _products.Add(product, quantity);
         }
 
-        public int GetNumberOfDeliveries() => _products is null || _products.Count == 0 ? 0 : GetProductsDistinctCategoriTitles(_products).Count;
+        public int GetNumberOfDeliveries() => _products is null || _products.Count == 0 ? 0 : GetProductsDistinctCategoryCount(_products);
         
-        public int GetNumberOfProducts() => _products is null ? 0 : _products.Count;
+        public int GetNumberOfProducts() => _products is null ? 0 : GetNumberOfDifferentProducts(_products);
 
         public double GetTotalAmount() => _products is null || _products.Count == 0 ? 0 : _products.Sum(e => e.Key.Price * e.Value);
 
@@ -60,9 +60,9 @@ namespace ShoppingCart.Cart
             return discount;
         }
 
-        public void ApplyDiscounts(ICampaign campaign)
+        public void ApplyDiscounts(params ICampaign[] campaign)
         {
-            _campaigns.Add(campaign);
+            _campaigns.AddRange(campaign);
         }
 
         public double GetCampaignDiscount()
@@ -87,38 +87,9 @@ namespace ShoppingCart.Cart
             return discount;
         }
 
-        public List<string> GetProductsDistinctCategoriTitles(Dictionary<Product.Product, int> products)
+        public List<string> GetProductsDistinctCategoryTitles(Dictionary<Product.Product, int> products)
         {
             return GetProductsCategories(products).Select(x => x.Title).Distinct().ToList();
-            //List<Category.Category> categories = new List<Category.Category>();
-
-            //Category.Category parentCategory;
-
-            //foreach (var item in products)
-            //{
-            //    if (categories.Count == 0 || !categories.Any(p => p.Title == item.Key.Category.Title))
-            //    {
-            //        categories.Add(item.Key.Category);
-            //    }
-
-            //    if (item.Key.Category.ParentCategory is null)
-            //        continue;
-
-            //    parentCategory = item.Key.Category.ParentCategory;
-
-            //    while (parentCategory != null)
-            //    {
-            //        if (categories.Count == 0 || !categories.Any(p => p.Title == parentCategory.Title))
-            //        {
-            //            categories.Add(parentCategory);
-            //        }
-
-            //        parentCategory = parentCategory.ParentCategory;
-            //    }
-
-            //}
-
-            //return categories;
         }
 
         public List<Category.Category> GetProductsCategories(Dictionary<Product.Product, int> products)
@@ -146,6 +117,59 @@ namespace ShoppingCart.Cart
             }
 
             return categories;
+        }
+
+        public double GetTotalAmountAfterDiscounts()
+        {
+            return (GetTotalAmount() - GetCampaignDiscount()) - GetCouponDiscount();
+        }
+
+        public int GetProductsDistinctCategoryCount(Dictionary<Product.Product, int> products)
+        {
+            return GetProductsDistinctCategoryTitles(products).Count;
+        }
+
+        public int GetNumberOfDifferentProducts(Dictionary<Product.Product, int> products)
+        {
+            return _products.GroupBy(p => p.Key.ProductTitle).Count();
+        }
+
+        public double GetDeliveryCost() => _deliveryCostCalculator.CalculateFor(this);
+
+        public dynamic GetPrintData()
+        {
+            return _products.GroupBy(g => new
+            {
+                g.Key.Category.Title,
+                g.Key.ProductTitle,
+                g.Value,
+                g.Key.Price
+            }).Select(s => new
+            {
+                CategoryName = s.Key.Title,
+                ProductTitle = s.Key.ProductTitle,
+                Quantity = s.Key.Value,
+                Price = s.Key.Price
+            }).ToList();
+        }
+
+        public string Print()
+        {
+            var products = GetPrintData();
+
+            StringBuilder builder = new StringBuilder();
+            
+            builder.AppendLine($"{"Category Name",15}  {"Product Name",15}  {"Quantity",15}  {"Unit Price",15}  {"Total Price",15}");
+            builder.AppendLine($"{"_____________",15}  {"____________",15}  {"________",15}  {"__________",15}  {"___________",15}");
+
+            foreach (var item in products)
+            {
+                builder.AppendLine($"{item.CategoryName,15} {item.ProductTitle,15} {item.Quantity,15} {item.Price,15} {item.Quantity*item.Price,15}\t");
+            }
+            
+            builder.AppendLine($"\nTotal Amount: {GetTotalAmount()}\nTotal Amount After Discounts: {GetTotalAmountAfterDiscounts()}" +
+                $"\nTotal Discount: {GetTotalAmount() - GetTotalAmountAfterDiscounts()}\nDelivery Cost: {GetDeliveryCost()}");
+            return builder.ToString();
         }
     }
 }

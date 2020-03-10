@@ -7,9 +7,9 @@ namespace ShoppingCart.Coupon
     public class AmountCoupon: ICoupon
     {
         private double _couponValue;
-        private int _minCartAmount;
+        private double _minCartAmount;
 
-        public AmountCoupon(double couponValue, int minCartAmount)
+        public AmountCoupon(double minCartAmount, double couponValue)
         {
             _couponValue = couponValue;
             _minCartAmount = minCartAmount;

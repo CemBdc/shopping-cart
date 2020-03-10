@@ -26,7 +26,7 @@ namespace ShoppingCart
 
             var config = LoadConfiguration();
             services.AddSingleton(config);
-
+            
             // required to run the application
             services.AddTransient<App>();
 

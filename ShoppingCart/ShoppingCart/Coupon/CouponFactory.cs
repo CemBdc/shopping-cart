@@ -7,17 +7,17 @@ namespace ShoppingCart.Coupon
 {
     public class CouponFactory
     {
-        public ICoupon Get(double campaignValue, int minProductQuantity, CouponTypes campaignTypes)
+        public ICoupon Get(double minCartAmount, double campaignValue, CouponTypes campaignTypes)
         {
             ICoupon coupon = null;
 
             switch (campaignTypes)
             {
                 case CouponTypes.Amount:
-                    coupon = new AmountCoupon(campaignValue, minProductQuantity);
+                    coupon = new AmountCoupon(campaignValue, minCartAmount);
                     break;
                 case CouponTypes.Rate:
-                    coupon = new RateCoupon(campaignValue, minProductQuantity);
+                    coupon = new RateCoupon(campaignValue, minCartAmount);
                     break;
             }
 
