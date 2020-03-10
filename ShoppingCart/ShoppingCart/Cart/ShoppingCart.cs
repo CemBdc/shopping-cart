@@ -159,12 +159,12 @@ namespace ShoppingCart.Cart
 
             StringBuilder builder = new StringBuilder();
             
-            builder.AppendLine($"{"Category Name",15}  {"Product Name",15}  {"Quantity",15}  {"Unit Price",15}  {"Total Price",15}");
-            builder.AppendLine($"{"_____________",15}  {"____________",15}  {"________",15}  {"__________",15}  {"___________",15}");
+            builder.AppendLine($"{"Category Name",20}  {"Product Name",20}  {"Quantity",20}  {"Unit Price",20}  {"Total Price",20}");
+            builder.AppendLine($"{"_____________",20}  {"____________",20}  {"________",20}  {"__________",20}  {"___________",20}");
 
             foreach (var item in products)
             {
-                builder.AppendLine($"{item.CategoryName,15} {item.ProductTitle,15} {item.Quantity,15} {item.Price,15} {item.Quantity*item.Price,15}\t");
+                builder.AppendLine($"{item.CategoryName,20} {item.ProductTitle,20} {item.Quantity,20} {item.Price,20} {item.Quantity*item.Price,20}\t");
             }
             
             builder.AppendLine($"\nTotal Amount: {GetTotalAmount()}\nTotal Amount After Discounts: {GetTotalAmountAfterDiscounts()}" +
