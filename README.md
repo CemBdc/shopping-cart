@@ -13,7 +13,7 @@ Microsoft.Extensions.Configuration.Binder
 Microsoft.Extensions.Configuration.Json
 ```
 
-Software standards have been adhered to as much as possible in such as SOLID principles, OOP standarts, Design Patterns. 
+Software standards have been adhered to as much as possible in project such as SOLID principles, OOP standarts, Design Patterns. 
 This approach enables loosely coupled classes which make them testable, maintainable and extensible.  
 
 
