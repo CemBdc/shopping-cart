@@ -37,9 +37,9 @@ namespace ShoppingCart.Cart
             _products.Add(product, quantity);
         }
 
-        public int GetNumberOfDeliveries() => _products is null || _products.Count == 0 ? 0 : GetProductsDistinctCategoryCount(_products);
+        public int GetNumberOfDeliveries() => _products is null || _products.Count == 0 ? 0 : GetProductsDistinctCategoryCount();
         
-        public int GetNumberOfProducts() => _products is null ? 0 : GetNumberOfDifferentProducts(_products);
+        public int GetNumberOfProducts() => _products is null ? 0 : GetNumberOfDifferentProducts();
 
         public double GetTotalAmount() => _products is null || _products.Count == 0 ? 0 : _products.Sum(e => e.Key.Price * e.Value);
 
@@ -73,7 +73,7 @@ namespace ShoppingCart.Cart
             if (_campaigns is null || _campaigns.Count <= 0)
                 return discount;
 
-            var categories = GetProductsCategories(_products);
+            var categories = GetProductsCategories();
 
             foreach (var item in _campaigns)
             {
@@ -87,18 +87,18 @@ namespace ShoppingCart.Cart
             return discount;
         }
 
-        public List<string> GetProductsDistinctCategoryTitles(Dictionary<Product.Product, int> products)
+        public List<string> GetProductsDistinctCategoryTitles()
         {
-            return GetProductsCategories(products).Select(x => x.Title).Distinct().ToList();
+            return GetProductsCategories().Select(x => x.Title).Distinct().ToList();
         }
 
-        public List<Category.Category> GetProductsCategories(Dictionary<Product.Product, int> products)
+        public List<Category.Category> GetProductsCategories()
         {
             List<Category.Category> categories = new List<Category.Category>();
 
             Category.Category parentCategory;
 
-            foreach (var item in products)
+            foreach (var item in _products)
             {
                 categories.Add(item.Key.Category);
 
@@ -124,12 +124,12 @@ namespace ShoppingCart.Cart
             return (GetTotalAmount() - GetCampaignDiscount()) - GetCouponDiscount();
         }
 
-        public int GetProductsDistinctCategoryCount(Dictionary<Product.Product, int> products)
+        public int GetProductsDistinctCategoryCount()
         {
-            return GetProductsDistinctCategoryTitles(products).Count;
+            return GetProductsDistinctCategoryTitles().Count;
         }
 
-        public int GetNumberOfDifferentProducts(Dictionary<Product.Product, int> products)
+        public int GetNumberOfDifferentProducts()
         {
             return _products.GroupBy(p => p.Key.ProductTitle).Count();
         }
